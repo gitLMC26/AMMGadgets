@@ -18,10 +18,10 @@ export const clickClose = (close, closeModal) => {
 let lastCount = sessionStorage.getItem("Last Count");
 let addedProducts = JSON.parse(localStorage.getItem("Cart Products"));
 let productsID = JSON.parse(localStorage.getItem("Product ID"));
-// let productIdPrice = JSON.parse(localStorage.getItem("Product Id Price"));
-// let productPriceTotal = JSON.parse(localStorage.getItem("Price Total"));
+let productIdPrice = JSON.parse(localStorage.getItem("Product Id Price"));
+let productPriceTotal = JSON.parse(localStorage.getItem("Price Total"));
 
-// let totalPriceProd = 0;
+let totalPriceProd = 0;
 
 export const storeProdCart = (btnClass, cartCounter) => {
     function store() {
@@ -38,7 +38,7 @@ export const storeProdCart = (btnClass, cartCounter) => {
         {
             addedProducts = [];
             productsID = [];
-            // productIdPrice = [];
+            productIdPrice = [];
 
             if(lastCount===null)
             {
@@ -53,19 +53,19 @@ export const storeProdCart = (btnClass, cartCounter) => {
                 ProdQuantity: 1
             }
 
-            // let prodPrice = {
-            //     ProductId: parentId,
-            //     ProductPrice: childProdPrice.textContent
-            // }   
+            let prodPrice = {
+                ProductId: prodId,
+                ProductPrice: prodClickDiv[2].textContent
+            }   
     
-            // localStorage.setItem("ProdIdPrice", JSON.stringify(prodPrice));
-            // productIdPrice.push(prodPrice);
-            // localStorage.setItem("Product Id Price", JSON.stringify(productIdPrice));
+            localStorage.setItem("ProdIdPrice", JSON.stringify(prodPrice));
+            productIdPrice.push(prodPrice);
+            localStorage.setItem("Product Id Price", JSON.stringify(productIdPrice));
 
-            // let parseTotalPrice = parseInt(childProdPrice.textContent);
-            // totalPriceProd += parseTotalPrice; 
-            // localStorage.setItem("Price Total", JSON.stringify(totalPriceProd));
-            // document.getElementById("totalPriceSpan").textContent = "Total: "+totalPriceProd;
+            let parseTotalPrice = parseInt(prodClickDiv[2].textContent);
+            totalPriceProd += parseTotalPrice; 
+            localStorage.setItem("Price Total", JSON.stringify(totalPriceProd));
+            document.getElementById("totalPriceSpan").textContent = "Total: "+totalPriceProd;
     
             localStorage.setItem("Product Id", JSON.stringify(prodId));
             productsID.push(prodId);
@@ -107,19 +107,19 @@ export const storeProdCart = (btnClass, cartCounter) => {
                     ProdQuantity: 1
                 }
 
-                // let prodPrice = {
-                //     ProductId: parentId,
-                //     ProductPrice: childProdPrice.textContent
-                // }   
+                let prodPrice = {
+                    ProductId: prodId,
+                    ProductPrice: prodClickDiv[2].textContent
+                }   
         
-                // localStorage.setItem("ProdIdPrice", JSON.stringify(prodPrice));
-                // productIdPrice.push(prodPrice);
-                // localStorage.setItem("Product Id Price", JSON.stringify(productIdPrice));
+                localStorage.setItem("ProdIdPrice", JSON.stringify(prodPrice));
+                productIdPrice.push(prodPrice);
+                localStorage.setItem("Product Id Price", JSON.stringify(productIdPrice));
 
-                // let parseTotalPrice = parseInt(childProdPrice.textContent)
-                // totalPriceProd += parseTotalPrice; 
-                // localStorage.setItem("Price Total", JSON.stringify(totalPriceProd));
-                // document.getElementById("totalPriceSpan").textContent = "Total: "+totalPriceProd;
+                let parseTotalPrice = parseInt(prodClickDiv[2].textContent)
+                totalPriceProd += parseTotalPrice; 
+                localStorage.setItem("Price Total", JSON.stringify(totalPriceProd));
+                document.getElementById("totalPriceSpan").textContent = "Total: "+totalPriceProd;
 
                 localStorage.setItem("Product Id", JSON.stringify(prodId));
                 productsID.push(prodId);
@@ -132,6 +132,7 @@ export const storeProdCart = (btnClass, cartCounter) => {
         }
         cartCounter.textContent = lastCount; 
         console.log(cartCounter.textContent);
+        location.reload();
     }
        
     for (var i = 0; i < btnClass.length; i++) {
@@ -177,13 +178,15 @@ export const displayCartProd = (cartDivCenter,prodQuantity,cartIcon) => {
         let deleteDiv = document.createElement("div");
         deleteDiv.classList = "deleteDiv";
         let removeProd = document.createElement("span");
+        removeProd.id = "cartProdDescDiv"+i;
+        console.log(removeProd.id);
         removeProd.classList = "material-symbols-rounded"; 
         removeProd.textContent = "delete";
-        // removeProd.addEventListener("click", removeProduct);
+        removeProd.addEventListener("click", removeProduct);
 
-        // let parseTotalPrice = parseInt(addedProducts[i].ProductPrice)
-        // totalPriceProd += parseTotalPrice; 
-        // localStorage.setItem("Price Total", JSON.stringify(totalPriceProd));
+        let parseTotalPrice = parseInt(addedProducts[i].ProductPrice)
+        totalPriceProd += parseTotalPrice; 
+        localStorage.setItem("Price Total", JSON.stringify(totalPriceProd));
 
         cartDivCenter.appendChild(addedProdDiv);
         addedProdDiv.appendChild(prodImageDiv);
@@ -195,56 +198,58 @@ export const displayCartProd = (cartDivCenter,prodQuantity,cartIcon) => {
         addedProdDiv.appendChild(deleteDiv);
         deleteDiv.appendChild(removeProd);
 
-        // function removeProduct(){
-        //     let productPriceTotal = JSON.parse(localStorage.getItem("Price Total"));
-        //     let remProd = document.getElementById(addedProdDiv.id);
-        //     let remPriceParent = this.parentNode.id;
-        //     let remPriceId = document.querySelector("#"+remPriceParent);
-        //     let priceRem = remPriceId.children[2].textContent;
-        //     let parsePrice = parseInt(priceRem);
-        //     let remPriceTotal = productPriceTotal - parsePrice;
-        //     let remPriceTotalStr = remPriceTotal.toString();
-        //     const pos = addedProducts.map(e => e.ProductId).indexOf(addedProducts[i]);
-        //     console.log(pos);
+        function removeProduct(){
+            let productPriceTotal = JSON.parse(localStorage.getItem("Price Total"));
+            let remProd = document.getElementById(addedProdDiv.id);
+            let remPriceParent = this.id;
+            let remPriceId = document.querySelector("#"+remPriceParent);
+            console.log(remPriceId);
+            let priceRem = remPriceId.children[2].textContent;
+            let parsePrice = parseInt(priceRem);
+            let remPriceTotal = productPriceTotal - parsePrice;
+            let remPriceTotalStr = remPriceTotal.toString();
+            const pos = addedProducts.map(e => e.ProductId).indexOf(addedProducts[i]);
+            console.log(pos);
             
-        //     remProd.remove();
-        //     addedProducts.splice(pos, 1);
-        //     productsID.splice(pos, 1);
-        //     sessionStorage.setItem("Last Count", --lastCount);
-        //     cartCount.textContent = lastCount; 
-        //     cartIcon.appendChild(cartCount);
+            remProd.remove();
+            addedProducts.splice(pos, 1);
+            productsID.splice(pos, 1);
+            // sessionStorage.setItem("Last Count", --lastCount);
+            // cartCount.textContent = lastCount; 
+            // cartIcon.appendChild(cartCount);
             
-        //     if(lastCount==0)
-        //     {
-        //         cartCount.textContent = ""; 
-        //         cartIcon.appendChild(cartCount);
-        //         sessionStorage.setItem("Last Count", "");
-        //     }
-        //     document.getElementById("totalPriceSpan").textContent = "Total: "+remPriceTotalStr;
+            // if(lastCount==0)
+            // {
+            //     cartCount.textContent = ""; 
+            //     cartIcon.appendChild(cartCount);
+            //     sessionStorage.setItem("Last Count", "");
+            // }
+            document.getElementById("totalPriceSpan").textContent = "Total: "+remPriceTotalStr;
 
-        //     localStorage.setItem("Price Total",JSON.stringify(remPriceTotalStr));
-        //     localStorage.setItem("Product ID", JSON.stringify(productsID));
-        //     localStorage.setItem("Cart Products", JSON.stringify(addedProducts));
-        // }
+            localStorage.setItem("Price Total",JSON.stringify(remPriceTotalStr));
+            localStorage.setItem("Product ID", JSON.stringify(productsID));
+            localStorage.setItem("Cart Products", JSON.stringify(addedProducts));
+        }
     }
 
-    // let totalPrice = document.createElement("div");
-    // totalPrice.classList = "totalPrice";
-    // totalPrice.id = "totalPrice";
-    // let totalPriceSpan = document.createElement("span");
-    // totalPriceSpan.id = "totalPriceSpan";
-    // totalPriceSpan.textContent = "Total: "+productPriceTotal;
+    let totalPrice = document.createElement("div");
+    totalPrice.classList = "totalPrice";
+    totalPrice.id = "totalPrice";
+    let totalPriceSpan = document.createElement("span");
+    totalPriceSpan.id = "totalPriceSpan";
+    totalPriceSpan.textContent = "Total: ";
+    totalPriceSpan.textContent = "Total: "+productPriceTotal;
 
-    // let checkOutDiv = document.createElement("div");
-    // checkOutDiv.classList = "checkOutDiv";
-    // let checkOutBtn = document.createElement("button");
-    // checkOutBtn.classList = "checkOutBtn";
-    // checkOutBtn.textContent = "Checkout";
+    let checkOutDiv = document.createElement("div");
+    checkOutDiv.classList = "checkOutDiv";
+    let checkOutBtn = document.createElement("button");
+    checkOutBtn.classList = "checkOutBtn";
+    checkOutBtn.textContent = "Checkout";
 
-    // cartDivCenter.appendChild(totalPrice);
-    // cartDivCenter.appendChild(checkOutDiv);
-    // checkOutDiv.appendChild(checkOutBtn);
-    // totalPrice.appendChild(totalPriceSpan);
+    cartDivCenter.appendChild(totalPrice);
+    cartDivCenter.appendChild(checkOutDiv);
+    checkOutDiv.appendChild(checkOutBtn);
+    totalPrice.appendChild(totalPriceSpan);
 
     // function prodQuantityF(){ 
     //     let totalPriceProd = 0;
