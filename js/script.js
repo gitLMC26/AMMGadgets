@@ -1,6 +1,6 @@
-import { displayProd } from '/js/storeProd.js';
+import { displayProd } from './js/storeProd.js';
 
-import {clickCart, clickClose, storeProdCart, displayCartProd} from '/js/cart.js';
+import {clickCart, clickClose, storeProdCart, displayCartProd} from './js/cart.js';
 
 // // Access cart
 let cartModal = document.querySelector(".cartModal");
