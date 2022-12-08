@@ -16,20 +16,19 @@ clickCart(cartClickIcon, cartModal);
 clickClose(close, cartModal);
 
 storeProdCart(addBtnClickClass, cartCounter);
-displayCartProd(cartModalCenter,prodQuantity,cartClickIcon);
+displayCartProd(cartModalCenter, prodQuantity, cartCounter);
 
 // // Store selected product to local storages/ for display product
 var clickProdClass = document.getElementsByClassName("prodView");
 console.log(clickProdClass);
 
-var getClickProdId = function() {
-    var id = this.getAttribute("id"); 
-    displayProd(id);
-}
+let sliderHide = document.querySelector("#pSlider");
+let productShow = document.querySelector(".box-container");
+let prodImg = document.querySelector("#prodImg");
+let productName = document.querySelector(".title");
+let priceProd = document.querySelector(".price");
 
-for (var i = 0; i < clickProdClass.length; i++) {
-    clickProdClass[i].addEventListener("click", getClickProdId);
-}  
+displayProd(clickProdClass, sliderHide, productShow, prodImg, productName, priceProd);
 
 // JS
 

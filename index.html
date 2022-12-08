@@ -46,8 +46,7 @@
             <div id="searchBtn" class="fas fa-search"></div>
             <a href="#" class="fas fa-heart"></a>
             <div class="cart-container">
-                <span id="counter"></span>
-                <a href="#" class="fas fa-shopping-cart" id="cartIcon"></a>
+                <a href="#" class="fas fa-shopping-cart" id="cartIcon"> <span id="counter"></span></a>
             </div>
             <div id="loginBtn" class="fas fa-user"></div>
         </div>
@@ -125,10 +124,78 @@
         </ol>
     </div>
 
+    <div class="dispProdDiv">
+        <div class="imgSrc">
 
+        </div>
+        <div class="prodDesc">
+            
+        </div>
+    </div>
 
+    <div class="box-container" style="display: none;">
 
-
+        <div class="box">
+    
+            <div class="image-container">
+    
+                <div class="big-image">
+                   <!-- Product Image -->
+                   <img id="prodImg">
+                </div>
+    
+                <div class="small-image">
+                    <img class="active" src="images/laptop.png" alt="">
+                    <img src="images/laptop.png" alt="">
+                    <img src="images/laptop.png" alt="">
+                </div>
+    
+            </div>
+    
+            <div class="content">
+                <!-- Product Name -->
+                <h3 class="title"></h3>
+                <!-- Product Price -->
+                <div class="price"></div>
+                <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Consectetur, rerum.</p>
+    
+                <form action="">
+    
+                    <div class="dropDown">
+                        <span> size : </span>
+                        <select name="" id="">
+                            <option value="small">128gb</option>
+                            <option value="medium">256gb</option>
+                        </select>
+                        <span> color : </span>
+                        <select name="" id="">
+                            <option value="black">black</option>
+                            <option value="blue">blue</option>
+                            <option value="white">white</option>
+                        </select>
+                    </div>
+    
+                    <div class="quantity">
+                        <span> quantity : </span>
+                        <input type="number" value="1">
+                    </div>
+    
+                </form>
+    
+                <a href="#"><button class="btn" id="dispCheckOutBtn"> <i class="fas fa-shopping-cart"></i> Add to Cart </button></a>
+                <span class="stock"> <i class="fas fa-check"></i> in stock </span>
+                <div class="share">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-discord"></i></a>
+                    <a href="#"><i class="fab fa-github"></i></a>
+                </div>
+    
+            </div>
+    
+        </div>
+    
+    </div>  
 
 <!-- --------------------------------------------------------------icons section starts  -->
 
@@ -934,7 +1001,7 @@
                 <div class="image">
                     <img src="img/20.png" alt="">
                 </div>
-                <!-- <div class="content">
+                <!-- <div class="content">          
                     <h3>redmi 9A</h3>
                     <div class="price">P13,000<span>15,000</span></div>
                     <a href="#" class="btn">add to cart</a>
@@ -1013,10 +1080,26 @@
 
 </section>
 
-
-
 <script src="https://unpkg.com/swiper@7/swiper-bundle.min.js"></script>
 <!-- custom js file link  -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="module" src="./js/script.js"></script>
+
+<script>
+    
+    $(document).ready(function(){
+    
+        $('.small-image img').click(function(){
+    
+            $(this).addClass('active').siblings().removeClass('active');
+    
+            let image = $(this).attr('src');
+            $('.big-image img').attr('src',image);
+    
+        });
+    
+    });
+    
+    </script>
 </body>
 </html>
