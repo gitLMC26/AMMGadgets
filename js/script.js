@@ -1,4 +1,4 @@
-import { displayProd } from '../js/storeProd.js';
+import {displayProd, dispAddToCart} from '../js/storeProd.js';
 
 import {clickCart, clickClose, storeProdCart, displayCartProd} from '../js/cart.js';
 
@@ -27,9 +27,11 @@ let productShow = document.querySelector(".box-container");
 let prodImg = document.querySelector("#prodImg");
 let productName = document.querySelector(".title");
 let priceProd = document.querySelector(".price");
+let dispAddToCartBtn = document.querySelector("#dispAddToCartBtn");
+let dispQuantity = document.querySelector("#dispQuantity").value;
 
 displayProd(clickProdClass, sliderHide, productShow, prodImg, productName, priceProd);
-
+dispAddToCart(dispAddToCartBtn, dispQuantity);
 // JS
 
 let searchForm = document.querySelector('.searchForm');
