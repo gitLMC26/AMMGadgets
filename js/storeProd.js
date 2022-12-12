@@ -144,6 +144,7 @@ export const dispAddToCart = (clickBtn, dispQuantity) => {
     let cartProducts = JSON.parse(localStorage.getItem("Cart Products"));
     clickBtn.addEventListener("click", addToCart);
     let prodPrice = parseInt()*dispQuantity;
+    console.log(productDetails);
     // productDetails.map(x => console.log(x.ProductPrice));
 
     productDetails = [];

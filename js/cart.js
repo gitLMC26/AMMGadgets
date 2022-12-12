@@ -145,6 +145,14 @@ export const storeProdCart = (btnClass, cartCounter) => {
     } 
     cartCounter.textContent = lastCount;
     console.log(cartCounter.textContent);
+
+    if(isNaN(productPriceTotal) || productPriceTotal===0)
+    {   
+        let str = "\u20B1";
+        let productPriceTotal = 0;
+        localStorage.setItem("Price Total", productPriceTotal)
+        document.getElementById("totalPriceSpan").textContent = "Total: "+str+productPriceTotal;
+    }
 }
 
 // // display addtocart products *refresh
@@ -179,10 +187,9 @@ export const displayCartProd = (cartDivCenter,prodQuantity, counter) => {
         prodQuantity.style.border = "1px solid black";
         prodQuantity.style.width = "50px";
 
-        let str = "\u20B1";
         let cartProdPrice = document.createElement("span");
         cartProdPrice.classList = "cartProdPrice";
-        cartProdPrice.textContent = str+addedProducts[i].ProductPrice;
+        cartProdPrice.textContent = addedProducts[i].ProductPrice;
         
         let deleteDiv = document.createElement("div");
         deleteDiv.classList = "deleteDiv";
@@ -206,23 +213,20 @@ export const displayCartProd = (cartDivCenter,prodQuantity, counter) => {
         deleteDiv.appendChild(removeProd);
 
         function removeProduct(){
-
-            if(isNaN(productPriceTotal) || productPriceTotal===0)
-            {
-                document.getElementById("totalPriceSpan").textContent = "0";
-            }
-
+            let productPriceTotal = localStorage.getItem("Price Total");
             let remProd = document.getElementById(addedProdDiv.id);
             let remPriceParent = this.id;
             let remPriceId = document.querySelector("#cartProdDescDiv"+remPriceParent);
-            console.log(remPriceId);
+            console.log(productPriceTotal);
             let priceRem = remPriceId.children[2].textContent;
             let parsePrice = parseInt(priceRem);
-            let remPriceTotal = productPriceTotal - parsePrice;
+            console.log(priceRem);
+            let remPriceTotal = parseInt(productPriceTotal) - parsePrice;
             let remPriceTotalStr = remPriceTotal.toString();
         
             addedProducts = addedProducts.filter((obj) => obj.ProductId != remPriceParent);
             productsID = productsID.filter((obj) => obj != remPriceParent);
+            productIdPrice = productIdPrice.filter((obj) => obj.ProductId != remPriceParent);
 
             remProd.remove();
 
@@ -233,22 +237,30 @@ export const displayCartProd = (cartDivCenter,prodQuantity, counter) => {
             {
                 counter.textContent = "";
             }
-            
-            document.getElementById("totalPriceSpan").textContent = "Total: "+remPriceTotalStr;
+
+            if(isNaN(productPriceTotal) || productPriceTotal===0)
+            {
+                let productPriceTotal = 0;
+                localStorage.setItem("Price Total", productPriceTotal)
+                document.getElementById("totalPriceSpan").textContent = "Total: "+productPriceTotal;
+            }
 
             localStorage.setItem("Price Total",remPriceTotalStr);
             localStorage.setItem("Product ID", JSON.stringify(productsID));
+            localStorage.setItem("Product Id Price", JSON.stringify(productIdPrice))
             localStorage.setItem("Cart Products", JSON.stringify(addedProducts));
+
+            document.getElementById("totalPriceSpan").textContent = "Total: "+remPriceTotalStr;
         }
     }
     
-    let priceTotal = parseInt(productPriceTotal);
+    // let priceTotal = parseInt(productPriceTotal);
     let totalPrice = document.createElement("div");
     totalPrice.classList = "totalPrice";
     totalPrice.id = "totalPrice";
     let totalPriceSpan = document.createElement("span");
     totalPriceSpan.id = "totalPriceSpan";
-    totalPriceSpan.textContent = "Total: "+priceTotal;
+    totalPriceSpan.textContent = "Total: "+productPriceTotal;
 
     let checkOutDiv = document.createElement("div");
     checkOutDiv.classList = "checkOutDiv";
@@ -259,7 +271,7 @@ export const displayCartProd = (cartDivCenter,prodQuantity, counter) => {
 
     function checkOut()
     {
-        if(productPriceTotal===0 || isNaN(productPriceTotal))
+        if(productPriceTotal===0 || productPriceTotal==="0")
         {
             alert("There's no item in your cart!");
         }
@@ -287,7 +299,6 @@ export const displayCartProd = (cartDivCenter,prodQuantity, counter) => {
 
         // if true
         if (index !== -1) { 
-
             let prodPriceFin = parseInt(productIdPrice[index].ProductPrice)*qValue;
         
             addedProducts[index].ProductPrice = prodPriceFin;
@@ -296,8 +307,7 @@ export const displayCartProd = (cartDivCenter,prodQuantity, counter) => {
             addedProducts[index].ProdQuantity = qValue;
             localStorage.setItem("Cart Products", JSON.stringify(addedProducts));
             
-            let str = "\u20B1";
-            parentQDiv.children[2].textContent = str+prodPriceFin.toString();
+            parentQDiv.children[2].textContent = prodPriceFin.toString();
             
             productsID[index] = qValueId;
             localStorage.setItem("Product ID", JSON.stringify(productsID));
@@ -310,7 +320,7 @@ export const displayCartProd = (cartDivCenter,prodQuantity, counter) => {
                 localStorage.setItem("Price Total", total+=parsePrice);
             }
             
-            document.getElementById("totalPriceSpan").textContent = "Total: "+str+total;
+            document.getElementById("totalPriceSpan").textContent = "Total: "+total;
         }
     }
 
@@ -327,12 +337,11 @@ export const displayCartProd = (cartDivCenter,prodQuantity, counter) => {
         localStorage.setItem("Price Total", total+=parsePrice);
     }
 
-    let str = "\u20B1";
-    document.getElementById("totalPriceSpan").textContent = "Total: "+str+productPriceTotal;
-
-    if(isNaN(productPriceTotal) || productPriceTotal===0)
+    if(productPriceTotal===0 || productPriceTotal === "0")
     {
-        document.getElementById("totalPriceSpan").textContent = str+"0";
+        let productPriceTotal = 0;
+        localStorage.setItem("Price Total", productPriceTotal)
+        document.getElementById("totalPriceSpan").textContent = "Total: "+productPriceTotal;
     }
 }
 

@@ -23,7 +23,7 @@ var clickProdClass = document.getElementsByClassName("prodView");
 console.log(clickProdClass);
 
 let sliderHide = document.querySelector("#pSlider");
-let productShow = document.querySelector(".box-container");
+let productShow = document.querySelector(".box_container");
 let prodImg = document.querySelector("#prodImg");
 let productName = document.querySelector(".title");
 let priceProd = document.querySelector(".price");
