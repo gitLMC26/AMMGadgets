@@ -1,6 +1,6 @@
-import {displayProd, dispAddToCart} from '../js/storeProd.js';
+import {displayProd} from '../js/storeProd.js';
 
-import {clickCart, clickClose, storeProdCart, displayCartProd} from '../js/cart.js';
+import {clickCart, clickClose, storeProdCart, displayCartProd, dispAddToCart} from '../js/cart.js';
 
 // // Access cart
 let cartModal = document.querySelector(".cartModal");
@@ -31,7 +31,7 @@ let dispAddToCartBtn = document.querySelector("#dispAddToCartBtn");
 let dispQuantity = document.querySelector("#dispQuantity").value;
 
 displayProd(clickProdClass, sliderHide, productShow, prodImg, productName, priceProd);
-dispAddToCart(dispAddToCartBtn, dispQuantity);
+dispAddToCart(dispAddToCartBtn, dispQuantity, cartCounter);
 // JS
 
 let searchForm = document.querySelector('.searchForm');

@@ -70,6 +70,7 @@ export const storeProdCart = (btnClass, cartCounter) => {
             {
                 productPriceTotal = 0;
                 let priceTotal = parseInt(productPriceTotal) + parseTotalPrice; 
+                
                 console.log(priceTotal);
                 localStorage.setItem("Price Total", priceTotal);
                 document.getElementById("totalPriceSpan").textContent = "Total: "+priceTotal;
@@ -152,6 +153,135 @@ export const storeProdCart = (btnClass, cartCounter) => {
         let productPriceTotal = 0;
         localStorage.setItem("Price Total", productPriceTotal)
         document.getElementById("totalPriceSpan").textContent = "Total: "+str+productPriceTotal;
+    }
+}
+
+// Add to cart view product
+export const dispAddToCart = (clickBtn, dispQuantity, cartCounter) => {
+    if(lastCount===null)
+    {
+        cartCounter.textContent = "0";
+    }
+    
+    clickBtn.addEventListener("click", addToCart);
+
+    function addToCart()
+    {
+        let prodDetails = JSON.parse(localStorage.getItem("Product Details"));
+
+        let prodId = prodDetails[0];
+        const checkProduct = (id) => {
+            return id==prodId;
+        }
+
+        if(addedProducts===null)
+        {
+            localStorage.setItem("Last Count", ++lastCount);
+            cartCounter.textContent = lastCount;
+            console.log(cartCounter.textContent);
+
+            addedProducts = [];
+            productsID = [];
+            productIdPrice = [];
+
+            localStorage.setItem("Product Id", JSON.stringify(prodDetails[0]));
+            productsID.push(prodDetails[0]);
+            localStorage.setItem("Product ID", JSON.stringify(productsID));
+
+            let prodPrice = {
+                ProductId: prodDetails[0],
+                ProductPrice: prodDetails[3]
+            } 
+
+            localStorage.setItem("ProdIdPrice", JSON.stringify(prodPrice));
+            productIdPrice.push(prodPrice);
+            localStorage.setItem("Product Id Price", JSON.stringify(productIdPrice));
+
+            let ProdDetails = {
+                ProductId: prodDetails[0],
+                ImageSource: prodDetails[1],
+                ProductName: prodDetails[2],
+                ProductPrice: prodDetails[3],
+                ProdQuantity: dispQuantity
+            }
+            localStorage.setItem("Product", JSON.stringify(ProdDetails));
+            addedProducts.push(ProdDetails);
+            localStorage.setItem("Cart Products", JSON.stringify(addedProducts));
+
+            let parseTotalPrice = parseInt(prodDetails[3]);
+
+            if(productPriceTotal===null)
+            {
+                productPriceTotal = 0;
+                let priceTotal = parseInt(productPriceTotal) + parseTotalPrice; 
+                
+                console.log(priceTotal);
+                localStorage.setItem("Price Total", priceTotal);
+                document.getElementById("totalPriceSpan").textContent = "Total: "+priceTotal;
+            }
+        }
+
+        else{
+            let prodDetails = JSON.parse(localStorage.getItem("Product Details"));
+            
+            let arrayProd = Object.values(productsID);
+            console.log(arrayProd);
+            let storedProdId = arrayProd.find(checkProduct);
+
+            if(storedProdId===prodId)
+            {   
+                alert("Item added already!");
+                cartCounter.textContent = lastCount;
+                console.log(cartCounter.textContent);
+            }
+
+            else
+            {
+                localStorage.setItem("Last Count", ++lastCount);
+                cartCounter.textContent = lastCount;
+                console.log(cartCounter.textContent);
+    
+                localStorage.setItem("Product Id", JSON.stringify(prodDetails[0]));
+                productsID.push(prodDetails[0]);
+                localStorage.setItem("Product ID", JSON.stringify(productsID));
+    
+                let prodPrice = {
+                    ProductId: prodDetails[0],
+                    ProductPrice: prodDetails[3]
+                } 
+    
+                localStorage.setItem("ProdIdPrice", JSON.stringify(prodPrice));
+                productIdPrice.push(prodPrice);
+                localStorage.setItem("Product Id Price", JSON.stringify(productIdPrice));
+    
+                let ProdDetails = {
+                    ProductId: prodDetails[0],
+                    ImageSource: prodDetails[1],
+                    ProductName: prodDetails[2],
+                    ProductPrice: prodDetails[3],
+                    ProdQuantity: dispQuantity
+                }
+
+                localStorage.setItem("Product", JSON.stringify(ProdDetails));
+                addedProducts.push(ProdDetails);
+                localStorage.setItem("Cart Products", JSON.stringify(addedProducts));
+    
+                let parseTotalPrice = parseInt(prodDetails[3]);
+    
+                if(productPriceTotal===null)
+                {
+                    productPriceTotal = 0;
+                    let priceTotal = parseInt(productPriceTotal) + parseTotalPrice; 
+                    
+                    console.log(priceTotal);
+                    localStorage.setItem("Price Total", priceTotal);
+                    document.getElementById("totalPriceSpan").textContent = "Total: "+priceTotal;
+                }
+            }
+        }
+        cartCounter.textContent = lastCount; 
+        console.log(cartCounter.textContent);
+        location.reload();
     }
 }
 
