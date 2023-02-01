@@ -9,14 +9,14 @@
   transition: all .2s linear;
 }
 
-.container{
+/* .container{
   display: flex;
   justify-content: center;
   align-items: center;
   padding:25px;
   min-height: 100vh;
   background:#ccc;
-}
+} */
 
 .container form{
   padding:20px;
@@ -86,8 +86,4 @@
   color:rgb(238, 231, 231);
   margin-top: 5px;
   cursor: pointer;
-}
-
-.container form .submit-btn:hover{
-  background: rgb(31, 29, 29);
 }
