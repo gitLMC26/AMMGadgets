@@ -75,7 +75,7 @@
 .container form .row .col .inputBox img{
   height: 34px;
   margin-top: 5px;
-  filter: drop-shadow(0 0 1px #000);
+  filter: drop-shadow(0 0 1px rgb(27, 24, 24));
 }
 
 .container form .submit-btn{
@@ -83,11 +83,11 @@
   padding:12px;
   font-size: 17px;
   background: #333;
-  color:#fff;
+  color:rgb(238, 231, 231);
   margin-top: 5px;
   cursor: pointer;
 }
 
 .container form .submit-btn:hover{
-  background: #666;
+  background: rgb(31, 29, 29);
 }
